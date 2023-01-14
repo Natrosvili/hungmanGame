@@ -1,9 +1,6 @@
 import random
-
-# Wir importieren die Datei namens HangmanWords.py und nennen sie als ,,Wörter"
 import hangmanWords as words
 
-# wichtige Variabeln
 chosenWord = random.choice(words.wordList)
 wordLength = len(chosenWord)
 gameOver = False
@@ -11,49 +8,46 @@ lives = 6
 display = []
 
 
-#Leerstellen erstellen
 for _ in chosenWord: 
     display += "_"
 
 
+print(f"""
+      * * * Welcome to the Hangman Python game! * * *\n"
+      There is a secret word that the program chooses randomly from the HangmanWords file and has hidden the letters.
+      You must enter a random letter to find the word.
+      You have {lives} lives, of course, and every time you find a letter it is automatically added to the meter shown below.
+      However, every time you miss a letter you lose a life.
+      Good Luck!
+      {display}\n
+      """)
 
-print("* * * Willkommen beim Hangman-Python-Spiel! * * *\n")
-print("Es gibt ein geheimes Wort, das das Programm zufällig aus der Datei HangmanWords ausgewählt und")
-print("die Buchstaben versteckt hat.\n")
-print("Sie müssen einen zufälligen Buchstaben eingeben, um das Wort zu finden.")
-print(f"Sie haben natürlich {lives} Leben, und jedes Mal, wenn Sie einen Buchstaben finden")
-print("es wird automatisch der unten gezeigten Anzeige hinzugefügt\n")
-print("Jedes Mal, wenn Sie eine Buchstabe nicht finden, verlieren Sie jedoch ein Leben")
-print("Also viel Glück!\n")
-print(f"{display}\n")
-
-
-#Code testen
-print(f"Psst, das Wort ist {chosenWord}")
+print(f"Psst, the word is {chosenWord}")
 
 
-while game_over != True:
-        guess = input("Bitte erraten Sie einen Buchstaben: ").lower()
-                
+while gameOver != True:
+    
+        if "_" not in display:
+            print("Congratulations! You won\n")
+            gameOver = True
+    
+        guess = input("Please guess a letter: ").lower()
+        
         if guess in display:
-            print("\nbereits ausgewählt, versuchen Sie es erneut")
+            print("\nalready selected, try again\n")
         
         for position in range(wordLength):
             letter = chosenWord[position]
             if letter == guess:
                 display[position] = letter
                 
-        #überprüfen, ob der Benutzer falsch liegt
+                
         if guess not in chosenWord:
             lives -= 1
+            print(f"\nyou have {lives} lives left\n")
             if lives == 0:
-                print("Aus dem Leben. du hast verloren")
-                game_over = True
+                print("\nOut of lives. You lost!\n")
+                gameOver = True
         
-        #verbinde alle Elemente in der Liste und verwandle sie in einen String.
         print(f"{' '.join(display)}")
     
-        #überprüfen, ob der Benutzer alle Buchstaben hat.
-        if "_" not in display:
-            print("Herzlichen Glückwunsch! Du hast gewonnen")
-            game_over = True
